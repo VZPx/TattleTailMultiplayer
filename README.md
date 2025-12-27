@@ -23,7 +23,7 @@
 ---
 
 ## 📥 Installation Guide
-Follow these steps carefully. The game requires a very specific version of the mod loader to function.
+Tattletail requires a very specific version of BepInEx to function.
 
 ### 1. Requirements
 * **BepInEx 5 (Win32 / x86 version SPECIFICALLY)**
@@ -34,7 +34,7 @@ Follow these steps carefully. The game requires a very specific version of the m
 1. Download the **BepInEx 5 Win32** zip file.
 2. Open your Tattletail game directory (where `tattletailWindows.exe` is located).
 3. Drag and drop **all files** from the BepInEx zip into that folder.
-4. **Launch the game once** and close it. This generates the necessary folders.
+4. **Launch the game once** and close it. This generates the folders inside BepInEx.
 
 ### 3. Installing the Mod
 1. Download the `TattleTailMultiplayer.dll` from the **Releases** tab.
@@ -60,5 +60,5 @@ Assembly-CSharp-firstpass.dll
 ```
 3. **Open Project:** Open the ```.sln``` file in Visual Studio 2022.
 
-## 📞 Support
+## 🔍 Support
 If you find a bug, please open an Issue on this GitHub repository with a copy of your LogOutput.log from the BepInEx folder.
