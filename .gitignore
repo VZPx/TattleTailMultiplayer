@@ -3,6 +3,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Visual Studio files
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.sln.docstates
+
+# BepInEx / Unity specific
+# Do not upload the game's managed DLLs
+/libs/
+/Dependencies/
+
+# User-specific Build results
+*.dll
+*.pdb
+
 # User-specific files
 *.rsuser
 *.suo
