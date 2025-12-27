@@ -45,7 +45,7 @@ If you are a developer looking to help with networking or bug fixes:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+   git clone [https://github.com/VZPx/TattleTailMultiplayer.git](https://github.com/VZPx/TattleTailMultiplayer.git)
    ```
 2. **Setup Dependencies:** Create a folder named libs in the project root. Copy the following DLLs from your game's tattletailWindows_Data/Managed folder into your new libs folder:
 ```
