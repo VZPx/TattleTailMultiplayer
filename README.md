@@ -3,6 +3,10 @@
 ![Status](https://img.shields.io/badge/Status-Work--In--Progress-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge)
 
+<p align="center">
+  <img src="Assets/banner.png" alt="Tattletail Multiplayer Logo" Height="400">
+</p>
+
 > [!CAUTION]
 > ### ⚠️ Development Build
 > This mod is currently in **Active Development**. It is not a finished product. Expect bugs, crashes, and sync issues. This repository is shared for testing and collaborative purposes.
