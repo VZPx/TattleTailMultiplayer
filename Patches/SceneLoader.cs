@@ -8,25 +8,15 @@ using UnityEngine.SceneManagement;
 [HarmonyPatch(typeof(SceneLoader))]
 public class SceneLoaderPatch
 {
-	[HarmonyPatch("LoadScene")]
+	[HarmonyPatch("LoadScene", new Type[] { typeof(List<string>), typeof(Action) })]
 	[HarmonyPrefix]
 	static bool LoadScenePrefix(SceneLoader __instance, List<string> scenes,
 		Action onComplete)
 	{
 		var trv = Traverse.Create(__instance);
 		var loadRoutine = trv.Field("_loadRoutine");
-		var routineEnumerator = trv.Method("LoadRoutine", new object[] { scenes, onComplete })
-							   .GetValue<IEnumerator>();
+		var routineEnumerator = LoadRoutinePatch(__instance, scenes, onComplete);
 		loadRoutine.SetValue(__instance.StartCoroutine(routineEnumerator));
-		return false;
-	}
-
-	[HarmonyPatch("LoadRoutine")]
-	[HarmonyPrefix]
-	static bool LoadRoutinePrefix(SceneLoader __instance, ref IEnumerator __result,
-		List<string> scenes, Action onComplete)
-	{
-		__result = LoadRoutinePatch(__instance, scenes, onComplete);
 		return false;
 	}
 

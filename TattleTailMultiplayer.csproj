@@ -74,7 +74,7 @@
     <Compile Include="Networking\SendData.cs" />
     <Compile Include="Networking\SteamLobby.cs" />
     <Compile Include="Patches\CommercialDirectorPatch.cs" />
-    <Compile Include="Patches\QuestTrigger - Copy.cs" />
+    <Compile Include="Patches\SceneLoader.cs" />
     <Compile Include="Patches\Trigger.cs" />
     <Compile Include="Patches\RandomizeChildren.cs" />
     <Compile Include="Patches\QuestTriggerWaydriveFinale.cs" />
