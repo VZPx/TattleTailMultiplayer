@@ -17,7 +17,7 @@ public class GameManagerPatch
 		LevelEnum nextLevel = Utils.GetLevelFlow().GetNextLevel(GD.currentLevel);
 		SendData.SendLevelTransition(nextLevel.ToString());
 	}
-
+	//test
 	[HarmonyPatch("OnLevelRestart")]
 	[HarmonyPostfix]
 	static void PostfixRestart(GameManager __instance)
