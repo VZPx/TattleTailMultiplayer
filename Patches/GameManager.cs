@@ -7,13 +7,21 @@ using System.Collections;
 using System;
 
 
-[HarmonyPatch(typeof(GameManager), "OnLevelComplete")] 
+[HarmonyPatch(typeof(GameManager))] 
 public class GameManagerPatch
 {
+	[HarmonyPatch("OnLevelComplete")]
 	[HarmonyPostfix]
 	static void Postfix(GameManager __instance)
 	{
 		LevelEnum nextLevel = Utils.GetLevelFlow().GetNextLevel(GD.currentLevel);
 		SendData.SendLevelTransition(nextLevel.ToString());
+	}
+
+	[HarmonyPatch("OnLevelRestart")]
+	[HarmonyPostfix]
+	static void PostfixRestart(GameManager __instance)
+	{
+		SendData.SendLevelTransition(GD.currentLevel.ToString());
 	}
 }
