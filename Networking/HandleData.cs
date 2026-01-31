@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using System;
+using System.Reflection.Emit;
 using UnityEngine;
 
 public class HandleData
@@ -65,6 +66,7 @@ public class HandleData
 
 	public static void LevelTransition(Packet _packet)
 	{
+		//Main.Logger.LogInfo($"Got to level: {_packet.ReadString()}");
 		GameManager.PlayLevel(GetEnumValue(_packet.ReadString()));
 	}
 

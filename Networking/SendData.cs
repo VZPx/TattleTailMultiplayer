@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BepInEx;
+using BepInEx.Logging;
+using System;
 using UnityEngine;
 
 public class SendData : MonoBehaviour
@@ -34,6 +36,7 @@ public class SendData : MonoBehaviour
 
 	public static void SendLevelTransition(string level)
 	{
+		Main.Logger.LogInfo($"Sending to level: {level}");
 		using (Packet packet = new Packet(4))
 		{
 			packet.Write(level);

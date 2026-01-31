@@ -11,11 +11,14 @@ using System;
 public class GameManagerPatch
 {
 	[HarmonyPatch("OnLevelComplete")]
-	[HarmonyPostfix]
-	static void Postfix(GameManager __instance)
+	[HarmonyPrefix]
+	static bool Prefix(GameManager __instance)
 	{
+		Achievements.UnlockAchievementForLevel(GD.currentLevel);
 		LevelEnum nextLevel = Utils.GetLevelFlow().GetNextLevel(GD.currentLevel);
+		GameManager.PlayLevel(nextLevel);
 		SendData.SendLevelTransition(nextLevel.ToString());
+		return false;
 	}
 
 	[HarmonyPatch("OnLevelRestart")]

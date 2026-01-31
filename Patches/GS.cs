@@ -18,7 +18,7 @@ public class GSPatch
 	{
 		GameConsole.AddCallback("discord", new Action(DiscordInvite), "Join our server for more!");
 		GameConsole.AddCallback("timeset", new Action<float>(SetTime), "[Sets the scale the game runs in]");
-		GameConsole.AddCallback("msg", new Action<string>(MessageAll), "Sends message output to all players in lobby");
+		GameConsole.AddCallback("msg", new Action<string>(MessageAll), "Sends message to all players in lobby");
 		GameConsole.AddCallback("debugtest", new Action<string>(DebugWrite), "returns string to console");
 		GameConsole.AddCallback("crimsonvision", new Action(ToggleRedMode), "Toggles a red light render perspective");
 		GameConsole.AddCallback("restartlevel", new Action(RestartLevel), "Restarts Current Level");
