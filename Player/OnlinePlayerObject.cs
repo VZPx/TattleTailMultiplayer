@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerObject : MonoBehaviour
+public class OnlinePlayerObject : MonoBehaviour
 {
-	public static PlayerObject instance;
+	public static OnlinePlayerObject instance;
 	public Movement _Movement;
+	public GameObject flashLight, Tattletail, CamTransform;
+
 	public void Start()
 	{
 		this._Movement = base.gameObject.AddComponent<Movement>();

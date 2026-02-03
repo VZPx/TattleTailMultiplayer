@@ -34,7 +34,10 @@ public class WaydriveFinalePatch
 		__instance.jumpscareAnimator.SetTrigger(__instance.jumpscareTriggerName);
 		yield return new WaitForSeconds(__instance.delayBeforeNextLevel);
 		GameManager.PlayLevel(LevelEnum._Memory_10_EscapeTheKaleidoscope);
-		SendData.SendLevelTransition(LevelEnum._Memory_10_EscapeTheKaleidoscope.ToString());
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendLevelTransition(LevelEnum._Memory_10_EscapeTheKaleidoscope.ToString());
+		}
 		yield break;
 	}
 }

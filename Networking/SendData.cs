@@ -25,6 +25,18 @@ public class SendData : MonoBehaviour
 		}
 	}
 
+	public static void SendInteraction(Vector3 origin, Vector3 direction, bool state, string objName)
+	{
+		using (Packet packet = new Packet(2))
+		{
+			packet.Write(origin);
+			packet.Write(direction);
+			packet.Write(state);
+			packet.Write(objName);
+			Networking.SendTCPData(packet);
+		}
+	}
+
 	public static void SendInput(float input)
 	{
 		using (Packet packet = new Packet(3))
@@ -53,18 +65,6 @@ public class SendData : MonoBehaviour
 		}
 	}
 
-	public static void SendInteraction(Vector3 origin, Vector3 direction, bool state, string objName)
-	{
-		using (Packet packet = new Packet(2))
-		{
-			packet.Write(origin);
-			packet.Write(direction);
-			packet.Write(state);
-			packet.Write(objName);
-			Networking.SendTCPData(packet);
-		}
-	}
-
 	public static void SendSwap(string objName, Vector3 newPosition, Quaternion newRotation)
 	{
 		using (Packet packet = new Packet(6))
@@ -89,7 +89,8 @@ public class SendData : MonoBehaviour
 	{
 		using (Packet packet = new Packet(8))
 		{
-			Debug.Log("Sent Trigger -MP");
+			Debug.Log($"Sent {objName} Trigger with parameters \n" +
+				$"{manualTrigger}, {autoComplete}. -MP");
 			packet.Write(objName);
 			packet.Write(manualTrigger);
 			packet.Write(autoComplete);
@@ -101,7 +102,8 @@ public class SendData : MonoBehaviour
 	{
 		using (Packet packet = new Packet(9))
 		{
-			Debug.Log("Sent Quest Trigger -MP");
+			Debug.Log($"Sent Quest Trigger {objName} with parameters \n" +
+				$"{autoComplete}, {questComplete}. -MP");
 			packet.Write(objName);
 			packet.Write(autoComplete);
 			packet.Write(questComplete);
@@ -113,9 +115,22 @@ public class SendData : MonoBehaviour
 	{
 		using (Packet packet = new Packet(10))
 		{
-			Debug.Log("Sent Quest Interactable -MP");
+			Debug.Log($"Sent Quest Interactable: {objName}\n" +
+				$"Called {methodName} -MP");
 			packet.Write(objName);
 			packet.Write(methodName);
+			Networking.SendTCPData(packet);
+		}
+	}
+
+	public static void SendPlayerStatus(string playerName, bool isAlive)
+	{
+		using (Packet packet = new Packet(11))
+		{
+			Debug.Log($"Sent Player Status: {playerName},\n" +
+				$"isAlive: {isAlive} -MP");
+			packet.Write(playerName);
+			packet.Write(isAlive);
 			Networking.SendTCPData(packet);
 		}
 	}

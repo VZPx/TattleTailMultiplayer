@@ -29,7 +29,10 @@ public class TriggerPatch
 		{
 			return false;
 		}
-		SendData.SendTrigger(__instance.gameObject.name, false, false);
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendTrigger(__instance.gameObject.name, false, false);
+		}
 		var allActions = trv.Field("allActions").GetValue<List<TriggerActionBase>>();
 
 		for (int i = 0; i < allActions.Count; i++)

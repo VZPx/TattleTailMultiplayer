@@ -158,7 +158,7 @@ public class SteamLobby : MonoBehaviour
 		}
 		else
 		{
-			this.secondPlayerName = "None";
+			//this.secondPlayerName = "None"; (Does this cause a visual bug when removed?)
 		}
 	}
 

@@ -48,10 +48,10 @@ public class InteractablePatch
 				GS.acceptInput = true;
 				__instance.OnInteractComplete(false);
 				AudioController.Play("hold_start", RM.fpsController.transform);
-				string text = (__instance.transform.parent ? __instance.gameObject.name 
+				string objectName = (__instance.transform.parent ? __instance.gameObject.name 
 					: __instance.transform.parent.name);
 				SendData.SendInteraction(Camera.main.transform.position, 
-					Camera.main.transform.forward, false, text);
+					Camera.main.transform.forward, false, objectName);
 			}
 		}
 
@@ -75,9 +75,9 @@ public class OnInteractPatch
 		if (__instance.holdTime <= 0f || GS.noHoldTime)
 		{
 			__instance.OnInteractComplete(false);
-			string text = (__instance.transform.parent ? __instance.gameObject.name 
+			string objectName = (__instance.transform.parent ? __instance.gameObject.name 
 				: __instance.transform.parent.name);
-			SendData.SendInteraction(Camera.main.transform.position, Camera.main.transform.forward, false, text);
+			SendData.SendInteraction(Camera.main.transform.position, Camera.main.transform.forward, false, objectName);
 			return false;
 		}
 		trv.Field("_isHeld").SetValue(true);

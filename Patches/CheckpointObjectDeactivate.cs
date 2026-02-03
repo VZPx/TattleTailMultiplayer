@@ -17,7 +17,10 @@ public class CheckpointObjectivePatch
 			Trigger component = __instance.triggerObjects[k].GetComponent<Trigger>();
 			if (component != null)
 			{
-				SendData.SendTrigger(component.name, true, true);
+				if (!HandleData.isNetworkPacket)
+				{
+					SendData.SendTrigger(component.name, true, true);
+				}
 			}
 		}
 	}

@@ -13,7 +13,10 @@ public class QuestBasePatch
 			if (component != null && component.GetIsInteractable())
 			{
 				component.ManualTrigger(false);
-				SendData.SendTrigger(component.name, true, false);
+				if (!HandleData.isNetworkPacket)
+				{
+					SendData.SendTrigger(component.name, true, false);
+				}
 			}
 		}
 		return false;

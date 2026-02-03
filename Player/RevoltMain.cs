@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class RevoltMain : MonoBehaviour
 	public CharacterController _PlayerObjectCC;
 	public bool getPlayer = true;
 	private string currentScene;
+	public List<string> deadPlayers = new List<string>(); //used for spectating
 
 	public void Start()
 	{
@@ -33,6 +35,7 @@ public class RevoltMain : MonoBehaviour
 			GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
 			gameObject.transform.localScale = new Vector3(0.54922f, 0.54922f, 0.54922f);
 			gameObject.layer = 9;
+			gameObject.name = "SecondPlayer";
 			if (gameObject != null)
 			{
 				global::UnityEngine.Object.DontDestroyOnLoad(gameObject);
@@ -42,7 +45,7 @@ public class RevoltMain : MonoBehaviour
 				}
 				_PlayerObject = gameObject;
 				_PlayerObjectCC = gameObject.GetComponent<CharacterController>();
-				_PlayerObject.AddComponent<PlayerObject>();
+				_PlayerObject.AddComponent<OnlinePlayerObject>();
 				return;
 			}
 		}
@@ -71,6 +74,6 @@ public class RevoltMain : MonoBehaviour
 	private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
 	{
 		currentScene = SceneManager.GetActiveScene().name;
-		Debug.Log("new scene loaded -VZP");
+		Debug.Log("new scene loaded -VZP");		
 	}
 }

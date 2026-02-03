@@ -20,7 +20,10 @@ public class QuestCycleFactsPatch
 		__instance.GetComponentInChildren<TattletailAnimator>().PlayMacro(TattletailAnimator.Macro.DeadBattery, null);
 		yield return new WaitForSeconds(__instance.delayBeforeKnock);
 		__instance.endTrigger.ManualTrigger(false);
-		SendData.SendTrigger(__instance.endTrigger.name, true, false);
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendTrigger(__instance.endTrigger.name, true, false);
+		}
 		yield return new WaitForSeconds(__instance.delayBeforeQuestEnd);
 		RM.questOrder.CompleteCurrentQuest(__instance.gameObject);
 		yield break;

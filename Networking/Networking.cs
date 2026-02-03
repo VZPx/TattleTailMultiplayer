@@ -58,6 +58,7 @@ public class Networking
 		dictionary.Add(8, new Networking.PacketHandler(HandleData.HandleTrigger));
 		dictionary.Add(9, new Networking.PacketHandler(HandleData.HandleQuestTrigger));
 		dictionary.Add(10, new Networking.PacketHandler(HandleData.HandleQuestInteractable));
+		dictionary.Add(11, new Networking.PacketHandler(HandleData.HandlePlayerStatus));
 		Networking.packetHandlers = dictionary;
 	}
 }

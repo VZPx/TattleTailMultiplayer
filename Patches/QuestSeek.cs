@@ -20,7 +20,10 @@ public class QuestSeekPatch
 		if (gameObject != null)
 		{
 			gameObject.GetComponent<Trigger>().ManualTrigger(true);
-			SendData.SendTrigger(gameObject.name, true, true);
+			if (!HandleData.isNetworkPacket)
+			{
+				SendData.SendTrigger(gameObject.name, true, true);
+			}
 		}
 
 		return false;

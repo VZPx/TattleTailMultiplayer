@@ -73,7 +73,12 @@
     <Compile Include="Networking\Networking.cs" />
     <Compile Include="Networking\SendData.cs" />
     <Compile Include="Networking\SteamLobby.cs" />
+    <Compile Include="Player\Patches\TattletailController.cs" />
+    <Compile Include="Player\Patches\FlashlightController.cs" />
+    <Compile Include="Patches\MamaManager.cs" />
+    <Compile Include="Patches\FirstPersonController.cs" />
     <Compile Include="Patches\CommercialDirectorPatch.cs" />
+    <Compile Include="Patches\QuestMamaLOS.cs" />
     <Compile Include="Patches\SceneLoader.cs" />
     <Compile Include="Patches\Trigger.cs" />
     <Compile Include="Patches\RandomizeChildren.cs" />
@@ -94,7 +99,7 @@
     <Compile Include="Patches\CheckpointObjectDeactivate.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Networking\Packet.cs" />
-    <Compile Include="Player\PlayerObject.cs" />
+    <Compile Include="Player\OnlinePlayerObject.cs" />
     <Compile Include="Player\Movement.cs" />
     <Compile Include="Networking\HandleData.cs" />
     <Compile Include="Player\RevoltMain.cs" />
@@ -106,8 +111,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Discord\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

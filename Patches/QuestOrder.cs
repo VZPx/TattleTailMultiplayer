@@ -9,6 +9,10 @@ public class QuestOrderPatch
 	[HarmonyPrefix]
 	static bool StartQuestingPrefix(QuestOrder __instance)
 	{
+		if (!HandleData.isNetworkPacket)
+		{
+			//SendData.SendQuestInteractable("Q1", "StartQuesting");
+		}
 		var trv = Traverse.Create(__instance);
 		bool advanceToCheckpoint = trv.Field("advanceToCheckpoint").GetValue<bool>();
 		QuestBase currentQuest = trv.Field("currentQuest").GetValue<QuestBase>();
@@ -18,7 +22,10 @@ public class QuestOrderPatch
 			if (currentQuest != null)
 			{
 				currentQuest.AutoComplete();
-				SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+				if (!HandleData.isNetworkPacket)
+				{
+					SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+				}
 			}
 
 			string needed = trv.Field("neededCheckpoint").GetValue<string>();
@@ -28,7 +35,13 @@ public class QuestOrderPatch
 			{
 				__instance.ActivateNextQuest(true, false);
 				currentQuest.AutoComplete();
-				SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+				if (currentQuest != null)
+				{
+					if (!HandleData.isNetworkPacket)
+					{
+						SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+					}
+				}
 			}
 			__instance.ExitCheckpointMode();
 			__instance.ActivateNextQuest(false, true);
@@ -42,6 +55,10 @@ public class QuestOrderPatch
 	[HarmonyPrefix]
 	static bool CompleteCurrentQuestPrefix(QuestOrder __instance, GameObject sender)
 	{
+		if (!HandleData.isNetworkPacket)
+		{
+			//SendData.SendQuestInteractable(sender.name, "CompleteCurrentQuest"); //progresses but skips over a lot of things
+		}
 		var trv = Traverse.Create(__instance);
 		var questList = __instance.questList;
 		int currentQuestIndex = trv.Field("currentQuestIndex").GetValue<int>();
@@ -66,13 +83,19 @@ public class QuestOrderPatch
 				else
 				{
 					possibleQuests[i].OnAlternativeQuestComplete();
-					SendData.SendQuestInteractable(possibleQuests[i].name, "OnAlternativeQuestComplete");
+					if (!HandleData.isNetworkPacket)
+					{
+						SendData.SendQuestInteractable(possibleQuests[i].name, "OnAlternativeQuestComplete");
+					}
 				}
 			}
 			possibleQuests.Clear();
 		}
 		currentQuest.GetValue<QuestBase>().CompleteQuest();
-		SendData.SendQuestInteractable(currentQuest.GetValue<QuestBase>().name, "CompleteQuest");
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendQuestInteractable(currentQuest.GetValue<QuestBase>().name, "CompleteQuest");
+		}
 		currentQuest.SetValue(null);
 		RM.tattletail.GetNeeds().OnQuestComplete();
 
@@ -106,13 +129,19 @@ public class QuestOrderPatch
 			for (int i = 0; i < possibleQuests.Count; i++)
 			{
 				possibleQuests[i].StartQuest(fromAutoComplete, fromCheckpoint);
-				SendData.SendQuestInteractable(possibleQuests[i].name, string.Format("StartQuest{0}{1}", fromAutoComplete, fromCheckpoint));
+				if (!HandleData.isNetworkPacket)
+				{
+					SendData.SendQuestInteractable(possibleQuests[i].name, string.Format("StartQuest{0}{1}", fromAutoComplete, fromCheckpoint));
+				}
 			}
 		}
 		else
 		{
 			currentQuest.StartQuest(fromAutoComplete, fromCheckpoint);
-			SendData.SendQuestInteractable(currentQuest.name, string.Format("StartQuest{0}{1}", fromAutoComplete, fromCheckpoint));
+			if (!HandleData.isNetworkPacket)
+			{
+				SendData.SendQuestInteractable(currentQuest.name, string.Format("StartQuest{0}{1}", fromAutoComplete, fromCheckpoint));
+			}
 		}
 		RM.tattletail.GetNeeds().OnQuestStarted();
 		bool advanceToCheckpoint = trv.Field("advanceToCheckpoint").GetValue<bool>();

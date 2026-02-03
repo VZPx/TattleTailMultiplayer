@@ -17,7 +17,10 @@ public class GameManagerPatch
 		Achievements.UnlockAchievementForLevel(GD.currentLevel);
 		LevelEnum nextLevel = Utils.GetLevelFlow().GetNextLevel(GD.currentLevel);
 		GameManager.PlayLevel(nextLevel);
-		SendData.SendLevelTransition(nextLevel.ToString());
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendLevelTransition(nextLevel.ToString());
+		}
 		return false;
 	}
 
@@ -25,6 +28,9 @@ public class GameManagerPatch
 	[HarmonyPostfix]
 	static void PostfixRestart(GameManager __instance)
 	{
-		SendData.SendLevelTransition(GD.currentLevel.ToString());
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendLevelTransition(GD.currentLevel.ToString());
+		}
 	}
 }

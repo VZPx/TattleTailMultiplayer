@@ -143,7 +143,10 @@ public class InteractableActionsPatch
 					break;
 				case InteractableActions.Actions.AdvanceToSpecificLevel:
 					GameManager.PlayLevel(__instance.customLevelEnum);
-					SendData.SendLevelTransition(__instance.customLevelEnum.ToString());
+					if (!HandleData.isNetworkPacket)
+					{
+						SendData.SendLevelTransition(__instance.customLevelEnum.ToString());
+					}
 					break;
 				case InteractableActions.Actions.SetTattletailType_Standard:
 					RM.tattletail.SetTattletailType(TattletailController.TattletailType.STANDARD);

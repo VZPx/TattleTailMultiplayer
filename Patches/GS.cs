@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using Steamworks;
 
 
-[HarmonyPatch(typeof(GS))] 
+[HarmonyPatch(typeof(GS))]
 public class GSPatch
 {
 	[HarmonyPatch("SetupConsoleCommands")]
@@ -23,6 +23,9 @@ public class GSPatch
 		GameConsole.AddCallback("crimsonvision", new Action(ToggleRedMode), "Toggles a red light render perspective");
 		GameConsole.AddCallback("restartlevel", new Action(RestartLevel), "Restarts Current Level");
 		GameConsole.AddCallback("uncapfps", new Action(UncapFPS), "Plays at unlimited FPS.");
+		GameConsole.AddCallback("t2p", new Action(TeleportToPlayer), "Teleports to second player.");
+		GameConsole.AddCallback("tp", new Action<string>(GS.Teleport), "Teleport to a PlayerSpawn");
+		GameConsole.AddCallback("dv", new Action(DebugMode), "Toggles developer vision mode");
 	}
 
 	[HarmonyPatch("GotoLevel")]
@@ -134,6 +137,41 @@ public class GSPatch
 			return;
 		}
 		Debug.LogError("Couldn't find level " + currentLevel);
+	}
+
+	public static void DebugMode()
+	{
+		GS.SetNoHoldTime(true);
+		GS.ToggleFullbright();
+		GS.ToggleFullbright();
+
+		if (!GS.fullbright)
+		{
+			GS.ToggleFullbright();
+		}
+
+		GS.PostEffects(false);
+	}
+
+	public static void TeleportToPlayer()
+	{
+		var secondPlayer = OnlinePlayerObject.instance;
+
+		if (secondPlayer == null)
+		{
+			Debug.LogError("Second player not found!");
+			return;
+		}
+
+		var player = RM.fpsController;
+
+		if (player == null)
+		{
+			return;
+		}
+
+		player.TeleportPlayer(secondPlayer.transform.position,
+			secondPlayer.transform.eulerAngles);
 	}
 }
 

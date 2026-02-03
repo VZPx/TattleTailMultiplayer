@@ -15,7 +15,10 @@ public class QuestTriggerPatch
 		if (other.transform.root.gameObject == RM.fpsController.gameObject)
 		{
 			RM.questOrder.CompleteCurrentQuest(__instance.gameObject);
-			SendData.SendQuestTrigger(__instance.gameObject.name, false, false);
+			if (!HandleData.isNetworkPacket)
+			{
+				SendData.SendQuestTrigger(__instance.gameObject.name, false, false);
+			}
 		}
 		return false;
 	}
@@ -28,7 +31,10 @@ public class QuestTriggerPatch
 		if (component != null)
 		{
 			component.ManualTrigger(true);
-			SendData.SendTrigger(component.name, true, true);
+			if (!HandleData.isNetworkPacket)
+			{
+				SendData.SendTrigger(component.name, true, true);
+			}
 		}
 		RM.questOrder.CompleteCurrentQuest(__instance.gameObject);
 		return false;

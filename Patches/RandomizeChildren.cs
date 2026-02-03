@@ -49,10 +49,13 @@ public class RandomizeChildrenPatch
 
 			// 2. SEND THE DATA TO CLIENTS
 			// Send new data for Child A (which now has B's old spot)
-			SendData.SendSwap(childA.name, childB.position, childB.rotation);
+			if (!HandleData.isNetworkPacket)
+			{
+				SendData.SendSwap(childA.name, childB.position, childB.rotation);
 
-			// Send new data for Child B (which now has A's old spot)
-			SendData.SendSwap(childB.name, posA, rotA);
+				// Send new data for Child B (which now has A's old spot)
+				SendData.SendSwap(childB.name, posA, rotA);
+			}
 		}
 
 		return false; // Skip original

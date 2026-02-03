@@ -25,7 +25,10 @@ public class LevelAutoEndPatch
 		float timer = trv.Field("whiteOutTimer").GetValue<float>();
 		yield return new WaitForSeconds(timer);
 		GameManager.PlayLevel(__instance.nextLevel);
-		SendData.SendLevelTransition(__instance.nextLevel.ToString());
+		if (!HandleData.isNetworkPacket)
+		{
+			SendData.SendLevelTransition(__instance.nextLevel.ToString());
+		}
 		yield break;
 	}
 }
