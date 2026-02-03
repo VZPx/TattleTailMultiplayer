@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
+using Steamworks;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Policy;
 using UnityEngine;
@@ -89,6 +91,14 @@ public class HandleData
 		}
 	}
 
+	private static string GetLevelId()
+	{
+		LevelData levelByEnum = Utils.GetLevelFlow().GetLevelByEnum(GD.currentLevel);
+		string id = levelByEnum.secondarySceneName;
+		Debug.Log($"Returning: {id}");
+		return id;
+	}
+
 	public static void CommericalAction(Packet _packet)
 	{
 		string text = _packet.ReadString();
@@ -131,9 +141,9 @@ public class HandleData
 		bool flag = _packet.ReadBool();
 		bool fromAutoComplete = _packet.ReadBool();
 		GameObject gameObject = GameObject.Find(name);
-		if (gameObject == null) //gObj is probably in 2_scene (used for level specific quests)
+		if (gameObject == null) //gObj is probably in X_scene (used for level specific quests)
 		{
-			gameObject = FindObjectInScene("2_scene", name);
+			gameObject = FindObjectInScene($"{GetLevelId()}", name);
 		}
 		if (gameObject != null)
 		{
@@ -167,6 +177,10 @@ public class HandleData
 		bool autoComplete = _packet.ReadBool();
 		bool questComplete = _packet.ReadBool();
 		GameObject gameObject = GameObject.Find(name);
+		if (gameObject == null) //gObj is probably in X_scene (used for level specific quests)
+		{
+			gameObject = FindObjectInScene($"{GetLevelId()}", name);
+		}
 		if (gameObject != null)
 		{
 			QuestTrigger questTrigger = gameObject.GetComponent<QuestTrigger>();
@@ -199,6 +213,12 @@ public class HandleData
 		bool isAlive = _packet.ReadBool();
 
 		var deadPlayerList = RevoltMain.instance.deadPlayers;
+		var ownerName = SteamFriends.GetPersonaName();
+
+		if (playerName != ownerName) //if its not myself, player ded so disable his mesh
+		{
+			OnlinePlayerObject.instance.renderer.enabled = false;
+		}
 
 		if (isAlive)
 		{
@@ -221,16 +241,16 @@ public class HandleData
 		string name = _packet.ReadString();
 		string text = _packet.ReadString();
 		GameObject gameObject = GameObject.Find(name);
-		if (gameObject == null) //gObj is probably in 2_scene (used for level specific quests)
+		if (gameObject == null) //gObj is probably in X_scene (used for level specific quests)
 		{
-			gameObject = FindObjectInScene("2_scene", name);
+			gameObject = FindObjectInScene($"{GetLevelId()}", name);
 		}
-		bool objFound = gameObject != null;
+		//bool objFound = gameObject != null;
 
-		if (name == "Q1")
-			objFound = true;
+	/*	if (name == "Q1")
+			objFound = true;*/
 
-		if (objFound)
+		if (gameObject != null)
 		{
 			QuestInteractable questInteractable = gameObject.GetComponent<QuestInteractable>();
 			//	QuestOrder questOrder = gameObject.GetComponent<QuestOrder>();

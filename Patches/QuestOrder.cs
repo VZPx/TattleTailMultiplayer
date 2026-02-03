@@ -15,31 +15,37 @@ public class QuestOrderPatch
 		}
 		var trv = Traverse.Create(__instance);
 		bool advanceToCheckpoint = trv.Field("advanceToCheckpoint").GetValue<bool>();
-		QuestBase currentQuest = trv.Field("currentQuest").GetValue<QuestBase>();
+		var currentQuest = trv.Field("currentQuest");
 
 		if (advanceToCheckpoint)
 		{
-			if (currentQuest != null)
+			if (currentQuest.GetValue<QuestBase>() != null)
 			{
-				currentQuest.AutoComplete();
+				currentQuest.GetValue<QuestBase>().AutoComplete();
 				if (!HandleData.isNetworkPacket)
 				{
-					SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+					SendData.SendQuestInteractable(currentQuest.GetValue<QuestBase>().name,
+						"AutoComplete");
 				}
 			}
 
 			string needed = trv.Field("neededCheckpoint").GetValue<string>();
 			string storedCheckpoint = trv.Field("storedCheckpoint").GetValue<string>();
 
+			// SAFETY: Ensure strings aren't null before comparing
+			needed = needed ?? "";
+			storedCheckpoint = storedCheckpoint ?? "";
+
 			while (needed != storedCheckpoint)
 			{
 				__instance.ActivateNextQuest(true, false);
-				currentQuest.AutoComplete();
-				if (currentQuest != null)
+				currentQuest.GetValue<QuestBase>().AutoComplete();
+				if (currentQuest.GetValue<QuestBase>() != null)
 				{
 					if (!HandleData.isNetworkPacket)
 					{
-						SendData.SendQuestInteractable(currentQuest.name, "AutoComplete");
+						SendData.SendQuestInteractable(currentQuest.GetValue<QuestBase>().name,
+							"AutoComplete");
 					}
 				}
 			}

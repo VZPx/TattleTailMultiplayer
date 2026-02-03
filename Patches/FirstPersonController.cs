@@ -37,6 +37,7 @@ public class FirstPersonControllerPatch
 
 		if (secondPlayer == null)
 		{
+			isSpectating = false;
 			Debug.LogError("Second player null!");
 			return;
 		}
@@ -45,12 +46,17 @@ public class FirstPersonControllerPatch
 
 		if (camTransform == null)
 		{
+			//Firstperson angle
 			camTransform = new GameObject("CAMTRANSFORM");
 			camTransform.transform.parent = secondPlayer.transform;
-			camTransform.transform.localPosition = new Vector3(0, 0.8f, 0);
+			camTransform.transform.localPosition = new Vector3(0, 0.7491f, 0);
 			camTransform.transform.localEulerAngles = Vector3.zero;
 			secondPlayer.CamTransform = camTransform;
 		}
+
+		//thirdperson angle
+		//camTransform.transform.localPosition = new Vector3(0.7309f, 0.9863f, -1.9491f);
+		//camTransform.transform.localEulerAngles = new Vector3(0, 0, 0.0764f);
 
 		camera.transform.position = camTransform.transform.position;
 		//camera.transform.parent = secondPlayer.transform;
@@ -60,6 +66,7 @@ public class FirstPersonControllerPatch
 
 		if (deadplayerList == null)
 		{
+			isSpectating = false;
 			Debug.LogError("deadplayerList null!");
 			return;
 		}
@@ -67,6 +74,11 @@ public class FirstPersonControllerPatch
 		if (!isDebug)
 		{
 			isSpectating = deadplayerList.Contains(SteamFriends.GetPersonaName());
+
+			if (!isSpectating)
+			{
+				__instance.UnlockPlayerControls();
+			}
 		}
 	}
 

@@ -37,7 +37,8 @@ public class MamaManagerPatch
 			return false;
 		}
 
-		RM.flashlight.enabled = false;
+		RM.flashlight.flashlight.SetActive(false); //manually set off
+		RM.tattletail.tattletail.SetActive(false); //manually set off
 		FirstPersonControllerPatch.isSpectating = true;
 		RM.hud.SetNewQuest($"Spectating {secondPlayer}");
 		return false;
